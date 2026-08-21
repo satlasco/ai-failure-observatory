@@ -16,6 +16,7 @@ import sys
 import urllib.parse
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 # Ensure UTF-8 output on Windows consoles
 if sys.platform.startswith("win"):
