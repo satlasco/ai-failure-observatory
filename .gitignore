@@ -25,9 +25,11 @@ env/
 Thumbs.db
 
 # Generated data and reports (keep templates, ignore generated output)
+data/*.json
 data/raw/*.json
 data/processed/*.json
 analysis/reports/*.json
 
 # Jupyter
 .ipynb_checkpoints/
+

@@ -1,0 +1,10 @@
+{
+  "include": [
+    "server.py",
+    "src",
+    "taxonomy",
+    "analysis",
+    "experiments",
+    "tests"
+  ]
+}

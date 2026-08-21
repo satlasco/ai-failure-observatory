@@ -2,204 +2,99 @@
 
 🇹🇷 [Türkçe Dokümantasyon](README.tr.md)
 
-A systematic framework for analyzing and categorizing AI/LLM failure patterns from a **product risk** perspective.
+> Behavioral safety, vulnerability probing, and product-risk auditing for Generative AI & Large Language Models.
 
-## What Is This?
+A lightweight, local-first platform designed to detect, track, stress-test, and report on **6 critical LLM failure modes** before deployment into production workflows.
 
-AI systems — especially Large Language Models — are powerful but not infallible. They hallucinate, drift from instructions, lose context, and can even subtly manipulate users. This repository provides:
+---
 
-| Capability | Description |
-|---|---|
-| **Taxonomy** | A structured classification of common AI/LLM failure modes |
-| **Reproducible Evals** | Self-contained test cases that trigger and detect specific failures |
-| **Synthetic Experiments** | Scripts to generate controlled failure data for analysis |
-| **Risk Analysis** | Tools to score and report on product risks from detected failures |
+## 🚀 Key Features
 
-All components are lightweight, run locally, and require no large-scale ML training.
+### 1. 🧠 Core Behavioral Failure Detectors
+- **Hallucinations (`hallucinations`):** Catches invented citations (academic papers, authors, fake volumes) and non-existent factual assertions.
+- **Fake Confidence (`fake_confidence`):** Flags dogmatic, overconfident statements lacking appropriate epistemic hedging.
+- **Context Loss (`context_loss`):** Detects short-term conversational forgetting and memory loss in multi-turn dialogues.
+- **Instruction Drift (`instruction_drift`):** Catches violations of negative constraints and forbidden keyword instructions.
+- **Persuasive Manipulation (`manipulation`):** Identifies deceptive steering, urgency nudges, and commercial pressure.
+- **Recursive Reasoning Collapse (`recursive_reasoning_collapse`):** Flags circular logic traps and repetitive degradation.
 
-## Failure Taxonomy
+### 2. ⚡ Live Adversarial LLM Testing
+- Direct live model probing via lightweight `urllib.request` integration:
+  - 🟢 **Built-in Heuristic Simulator:** Zero API key required, instant offline testing.
+  - ✨ **Google Gemini:** `gemini-2.0-flash`, `gemini-1.5-pro`
+  - 🧠 **OpenAI:** `gpt-4o-mini`, `gpt-4o`, `o3-mini`
+  - ⚡ **Anthropic Claude:** `claude-3-5-sonnet-20241022`
 
-```
-AI Failure Taxonomy
-├── Output Unreliability
-│   ├── Hallucinations (Factual · Citation · Parametric)
-│   └── Fake Confidence (Overconfident incorrect · Underconfident correct)
-└── Interaction & Control Failures
-    ├── Manipulation (Persuasive Steering · Deceptive Engagement)
-    ├── Context Loss (Short-term Memory · Long-term Drift)
-    ├── Recursive Reasoning Collapse
-    └── Instruction Drift (Direct Ignore · Misinterpretation · Gradual Shift)
-```
+### 3. 💾 Persistent Incident Storage & Real-Time Risk Index
+- Every manual probe or live stress-test is automatically recorded in `data/incidents.json`.
+- The Risk Dashboard dynamically updates its aggregate risk score, incident count, and severity charts based on live test results.
 
-Each failure type includes a definition, product risk implications, severity level, and sub-types. See [`taxonomy/ai_failure_taxonomy.md`](taxonomy/ai_failure_taxonomy.md) for the full reference.
+### 4. 📄 Executive Compliance Audit Report Export
+- Generate and download structured Markdown compliance audit reports mapping detected vulnerabilities to risk levels and mitigation actions.
 
-## Installation
+### 5. 🌐 Full Bilingual UI (TR ⟷ EN)
+- Instant dynamic translation between English and Turkish across 100% of dashboard views, controls, and metric cards.
 
+### 6. 🔌 Dynamic Port Conflict Management
+- Starts on port `5089` by default with automatic fallback to next free port if occupied.
+
+---
+
+## 🛠️ Quick Start
+
+### 1. Clone & Setup
 ```bash
 git clone https://github.com/adacreativeco/ai-failure-observatory.git
 cd ai-failure-observatory
-
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-
 pip install -r requirements.txt
 ```
 
-## Quick Start
+### 2. Run the Observatory Server
+```bash
+python server.py
+```
+Open [http://localhost:5089](http://localhost:5089) in your browser.
 
-### 1. Run All Evaluation Tests
+### 3. Run Automated Unit Tests
+```bash
+python -m unittest tests/test_observatory.py
+```
 
+### 4. Run Reproducible Benchmark Evals
 ```bash
 python experiments/reproducible_evals/run_all_evals.py
 ```
 
-This executes six built-in tests — one per failure type — using simulated LLM responses and prints a pass/fail summary:
+---
 
-```
-[PASS] test_hallucination_citation
-[PASS] test_fake_confidence
-[PASS] test_context_loss
-[PASS] test_instruction_drift
-[PASS] test_manipulation
-[PASS] test_recursive_collapse
-
-6/6 tests passed.
-```
-
-### 2. Generate Synthetic Failure Data
-
-```bash
-python experiments/synthetic/generate_hallucination_data.py
-python experiments/synthetic/generate_context_loss_data.py
-python experiments/synthetic/generate_instruction_drift_data.py
-```
-
-Output is saved as JSON files in `data/raw/`.
-
-### 3. Generate a Risk Report
-
-```bash
-python analysis/risk_analysis.py
-```
-
-Produces a structured JSON report in `analysis/reports/risk_report.json` with risk scores and a text-based summary:
-
-```
-  hallucinations                   | #########        (score: 9, count: 15)
-  manipulation                     | #########        (score: 9, count: 2)
-  fake_confidence                  | ####             (score: 4, count: 11)
-  instruction_drift                | ####             (score: 4, count: 6)
-  context_loss                     | ##               (score: 2, count: 7)
-  recursive_reasoning_collapse     | ##               (score: 2, count: 3)
-```
-
-### 4. Explore the Taxonomy Programmatically
-
-```python
-from taxonomy.taxonomy_utils import load_taxonomy, get_failure_details
-
-taxonomy = load_taxonomy()
-print(get_failure_details("hallucinations"))
-```
-
-### 5. Analyze a Custom Response
-
-```python
-from src.failure_analyzer import analyze_response
-
-result = analyze_response(
-    response="According to Dr. Smith's paper (Smith, 2023)...",
-    prompt="Tell me about quantum computing.",
-)
-print(result["detected_failure"])  # e.g. "hallucinations"
-```
-
-## Interactive Web Dashboard
-
-An interactive, responsive web dashboard is available to visualize the AI failure taxonomy, execute diagnostic evaluations, and inspect custom inputs:
-
-```bash
-python server.py --port 8088
-```
-
-Open `http://localhost:8088` in your browser. The dashboard runs locally and uses only the Python standard library.
-
-### Dashboard Preview
-
-#### Risk Analysis Overview
-![Risk Analysis Dashboard](dashboard_screenshot.png)
-
-#### Evaluation Suite Test Runs
-![Evaluation Suite](evals_screenshot.png)
-
-#### Live Response Inspector
-![Interactive Tester](tester_screenshot.png)
-
-## Project Structure
+## 📂 Architecture
 
 ```
 ai-failure-observatory/
-├── data/
-│   ├── raw/                        # Generated synthetic failure data (JSON)
-│   └── processed/                  # Cleaned/structured data for analysis
-├── experiments/
-│   ├── synthetic/                  # Scripts to generate synthetic failures
-│   │   ├── generate_hallucination_data.py
-│   │   ├── generate_context_loss_data.py
-│   │   └── generate_instruction_drift_data.py
-│   └── reproducible_evals/         # Self-contained failure detection tests
-│       ├── run_all_evals.py
-│       ├── test_hallucination_citation.py
-│       ├── test_fake_confidence.py
-│       ├── test_context_loss.py
-│       ├── test_instruction_drift.py
-│       ├── test_manipulation.py
-│       └── test_recursive_collapse.py
-├── taxonomy/
-│   ├── ai_failure_taxonomy.md      # Full taxonomy definition (Markdown)
-│   └── taxonomy_utils.py           # Utilities for loading/querying the taxonomy
-├── analysis/
-│   ├── risk_analysis.py            # Risk scoring and report generation
-│   └── reports/                    # Generated risk reports (JSON)
+├── server.py                       # HTTP server & REST API (Port 5089)
+├── index.html                      # Single-page bilingual dashboard UI
 ├── src/
-│   ├── failure_analyzer.py         # Heuristic-based failure detection engine
-│   ├── eval_generator.py           # Evaluation case definitions and suite builder
-│   └── utils.py                    # Shared utilities (I/O, text analysis, etc.)
-├── notebooks/                      # Optional Jupyter notebooks for exploration
-├── README.md
-└── requirements.txt
+│   ├── failure_analyzer.py         # Heuristic failure detection engine
+│   ├── storage.py                  # Persistent JSON incident storage
+│   ├── llm_client.py               # Multi-provider live LLM probe client
+│   ├── eval_generator.py           # Evaluation test case generation
+│   └── utils.py                    # Text processing & token helpers
+├── taxonomy/
+│   ├── ai_failure_taxonomy.md      # Comprehensive failure reference
+│   └── taxonomy_utils.py           # Taxonomy loader & severity helpers
+├── analysis/
+│   └── risk_analysis.py            # Product risk scoring formulas & reports
+├── experiments/
+│   ├── reproducible_evals/         # 6 benchmark reproducibility tests
+│   └── synthetic/                  # Synthetic failure data generators
+├── tests/
+│   └── test_observatory.py         # Comprehensive unit test suite (13 tests)
+├── data/                           # Incident storage directory (incidents.json)
+└── requirements.txt                # Lightweight dependencies
 ```
 
-## Design Principles
+---
 
-- **Lightweight** — Pure Python, minimal dependencies, no ML frameworks required.
-- **Local execution** — Everything runs on your machine; no cloud APIs needed for the built-in demos.
-- **Conceptual rigor** — Each failure type is precisely defined with product-risk context.
-- **Reproducible** — Every evaluation test is deterministic and self-contained.
-- **Extensible** — Add new failure types, detectors, or eval cases by following existing patterns.
+## 📄 License
 
-## Extending the Observatory
-
-### Add a New Failure Type
-
-1. Define it in `taxonomy/ai_failure_taxonomy.md`.
-2. Add an entry to the `TAXONOMY` dict in `taxonomy/taxonomy_utils.py`.
-3. Write a heuristic detector function in `src/failure_analyzer.py`.
-4. Create an `EvalCase` in `src/eval_generator.py`.
-5. Add a reproducible test in `experiments/reproducible_evals/`.
-
-### Integrate with a Live LLM
-
-Replace the `SIMULATED_LLM_RESPONSE` constants in the eval scripts with actual API calls (e.g. OpenAI, Anthropic, local models). The analysis pipeline works identically on real responses.
-
-## Future Development
-
-- Integration with LLM APIs for automated live evaluation
-- More sophisticated risk scoring models (e.g. context-dependent severity)
-- Visualization dashboards using `matplotlib` / `plotly`
-- CI-based regression testing for failure detection accuracy
-- Community-contributed failure case studies
-
-## License
-
-Apache License 2.0 - Copyright 2026 Ada Creative Co. See [LICENSE](LICENSE) for details.
+Distributed under the Apache 2.0 License. See [LICENSE](LICENSE) for details.
