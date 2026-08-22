@@ -15,7 +15,7 @@
 
 **Behavioral safety, vulnerability probing, and product-risk auditing for Generative AI & Large Language Models.**
 
-[English Documentation](README.md) • [🇹🇷 Türkçe Dokümantasyon](README.tr.md)
+[English Documentation](README.md) • [🇹🇷 Türkçe Dokümantasyon](README.tr.md) • [📖 Case Study](https://adacreative.co/vaka-analizleri/ai-failure-observatory)
 
 </div>
 

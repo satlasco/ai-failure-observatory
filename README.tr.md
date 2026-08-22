@@ -15,7 +15,7 @@
 
 **Üretken Yapay Zeka ve Büyük Dil Modelleri (LLM) için davranışsal güvenlik, açık tarama ve ürün riski denetleme platformu.**
 
-[🇹🇷 Türkçe Dokümantasyon](README.tr.md) • [🇺🇸 English Documentation](README.md)
+[🇹🇷 Türkçe Dokümantasyon](README.tr.md) • [🇺🇸 English Documentation](README.md) • [📖 Vaka Analizi](https://adacreative.co/vaka-analizleri/ai-failure-observatory)
 
 </div>
 

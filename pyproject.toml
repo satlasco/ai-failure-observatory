@@ -40,7 +40,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/adacreativeco/ai-failure-observatory"
+Homepage = "https://adacreative.co/vaka-analizleri/ai-failure-observatory"
 Repository = "https://github.com/adacreativeco/ai-failure-observatory"
 Documentation = "https://github.com/adacreativeco/ai-failure-observatory#readme"
 "Bug Tracker" = "https://github.com/adacreativeco/ai-failure-observatory/issues"
