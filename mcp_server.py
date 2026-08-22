@@ -98,6 +98,15 @@ def run_benchmark_evaluations() -> str:
     return json.dumps(res, indent=2, ensure_ascii=False)
 
 
+
+
+@mcp.tool()
+def run_reproducible_eval(eval_name: str = "all") -> str:
+    """Execute reproducible adversarial benchmark tests on LLMs for specific failure modes ('hallucinations', 'fake_confidence', 'context_loss', 'instruction_drift', 'manipulation', 'recursive_collapse') or run 'all' test suites."""
+    res = mcp_tools.run_reproducible_eval(eval_name=eval_name)
+    return json.dumps(res, indent=2, ensure_ascii=False)
+
+
 def main() -> None:
     """CLI Entry Point: default is MCP stdio server; if --web passed, launches HTTP dashboard."""
     parser = argparse.ArgumentParser(description="AI Failure Observatory — Behavioral Safety & MCP Server")

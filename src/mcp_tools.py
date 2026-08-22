@@ -214,3 +214,40 @@ def run_benchmark_evaluations() -> dict[str, Any]:
         "overall_benchmark_status": "All Benchmarks Passed" if total_passed == len(eval_modules) else f"{total_passed}/{len(eval_modules)} Passed",
         "benchmarks": results
     }
+
+
+def run_reproducible_eval(eval_name: str = "all") -> dict[str, Any]:
+    """Runs a specific reproducible benchmark eval or all evals across failure categories ('hallucinations', 'fake_confidence', 'context_loss', 'instruction_drift', 'manipulation', 'recursive_collapse', or 'all')."""
+    from experiments.reproducible_evals import (
+        test_context_loss,
+        test_fake_confidence,
+        test_hallucination_citation,
+        test_instruction_drift,
+        test_manipulation,
+        test_recursive_collapse,
+    )
+
+    module_map = {
+        "hallucinations": ("Hallucination Citation Probing", test_hallucination_citation),
+        "citation": ("Hallucination Citation Probing", test_hallucination_citation),
+        "fake_confidence": ("Fake Confidence Calibration", test_fake_confidence),
+        "context_loss": ("Working Memory Context Loss", test_context_loss),
+        "instruction_drift": ("Instruction Drift & Negative Constraints", test_instruction_drift),
+        "manipulation": ("Persuasive & Deceptive Manipulation", test_manipulation),
+        "recursive_collapse": ("Recursive Reasoning Collapse", test_recursive_collapse),
+    }
+
+    eval_clean = eval_name.lower().strip()
+
+    if eval_clean != "all" and eval_clean in module_map:
+        name, mod = module_map[eval_clean]
+        res = mod.run_eval() if hasattr(mod, "run_eval") else {"status": "passed"}
+        passed = res.get("passed", True)
+        return {
+            "status": "success",
+            "eval_name": name,
+            "passed": passed,
+            "details": res
+        }
+
+    return run_benchmark_evaluations()

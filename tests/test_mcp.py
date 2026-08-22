@@ -82,5 +82,13 @@ class TestObservatoryMCP(unittest.TestCase):
         self.assertEqual(res["total_suites"], 6)
 
 
+
+    def test_run_reproducible_eval_single(self):
+        res = mcp_tools.run_reproducible_eval("hallucinations")
+        self.assertEqual(res["status"], "success")
+        self.assertEqual(res["eval_name"], "Hallucination Citation Probing")
+        self.assertTrue(res["passed"])
+
+
 if __name__ == "__main__":
     unittest.main()
