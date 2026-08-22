@@ -105,12 +105,13 @@ AI Failure Observatory, yapay zekâ asistanları için otonom bir **Yapay Zeka G
 
 | MCP Aracı | Parametreler | Açıklama |
 |---|---|---|
-| `audit_prompt_response` | `prompt`, `response`, `model` | Bir model yanıtını 6 hata moduna (halüsinasyon, sahte özgüven, manipülasyon vb.) karşı anında denetler. |
+| `audit_prompt_response` | `prompt`, `response`, `model` | Bir model yanıtını 6 hata moduna (halüsinasyon, sahte özgüven, manipülasyon, yönerge kayması, bağlam kaybı, döngüsel mantık) karşı anında denetler; ciddiyet seviyesi, kanıt ve hafifletme önerileri sunar. |
 | `get_failure_taxonomy` | `failure_type` *(isteğe bağlı)* | Resmi taksonomi tanımlarını, ciddiyet puanlarını (1-10), ürün risklerini ve hafifletme adımlarını döndürür. |
 | `get_risk_report` | *Yok* | Gerçek zamanlı yapay zeka ürün riski karnesini ve en öncelikli güvenlik açığı alanlarını üretir. |
-| `log_safety_incident` | `model_name`, `prompt`, `response`, `failure_type`... | Tespit edilen model hatalarını uyumluluk denetimi için kalıcı veritabanına kaydeder. |
-| `scan_multi_turn_conversation` | `turns_json` | Çok turlu diyalogları bağlam kaybı, bellek zayıflaması ve yönerge kaymasına karşı tarar. |
-| `run_benchmark_evaluations` | *Yok* | Tekrarlanabilir benchmark test paketini çalıştırır ve yapılandırılmış test sonuçlarını döndürür. |
+| `run_reproducible_eval` | `eval_name` *(varsayılan: "all")* | Spesifik bir hata modu ('hallucinations', 'fake_confidence', 'context_loss', 'instruction_drift', 'manipulation', 'recursive_collapse') veya tüm test paketleri için tekrarlanabilir güvenlik benchmark testlerini çalıştırır. |
+| `log_safety_incident` | `model_name`, `prompt`, `response`, `failure_type`... | Tespit edilen model hatalarını uyumluluk denetimi ve risk endeksi için kalıcı veritabanına kaydeder. |
+| `scan_multi_turn_conversation` | `turns_json` | Çok turlu diyalogları bağlam kaybı, bellek zayıflaması ve ilerleyen yönerge kaymasına karşı tarar. |
+| `run_benchmark_evaluations` | *Yok* | 6 hata kategorisindeki tüm otomatik benchmark test paketini çalıştırır ve sonuçları döner. |
 
 ### 🚀 Claude Desktop & Cursor Kurulumu
 

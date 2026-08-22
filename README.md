@@ -105,12 +105,13 @@ AI Failure Observatory acts as an autonomous **AI Safety & Red-Teaming Inspector
 
 | MCP Tool | Parameters | Description |
 |---|---|---|
-| `audit_prompt_response` | `prompt`, `response`, `model` | Audits an LLM prompt-response pair for all 6 failure modes (hallucinations, fake confidence, manipulation, drift, context loss, reasoning collapse). |
-| `get_failure_taxonomy` | `failure_type` *(optional)* | Returns formal taxonomy definitions, severity ratings (1-10), product risk implications, and concrete mitigations. |
-| `get_risk_report` | *None* | Generates the real-time AI product risk scorecard, incident distributions, and high-priority vulnerability areas. |
-| `log_safety_incident` | `model_name`, `prompt`, `response`, `failure_type`, `severity`... | Records a confirmed model failure into the persistent incident database for compliance auditing. |
-| `scan_multi_turn_conversation` | `turns_json` | Scans multi-turn dialogues for conversational amnesia, working memory degradation, and progressive instruction drift. |
-| `run_benchmark_evaluations` | *None* | Executes the automated reproducible evaluation benchmark suite across all failure modes and returns structured results. |
+| `audit_prompt_response` | `prompt`, `response`, `model` | Audits any LLM prompt-response pair for all 6 behavioral failure modes (hallucinations, fake confidence, manipulation, instruction drift, context loss, circular logic). Returns structured verdict, confidence scores, evidence, and mitigations. |
+| `get_failure_taxonomy` | `failure_type` *(optional)* | Returns formal taxonomy definitions, severity ratings (1-10), product risk implications, and concrete engineering mitigations. |
+| `get_risk_report` | *None* | Generates the real-time AI product risk scorecard, incident distributions across categories, and high-priority vulnerability areas. |
+| `run_reproducible_eval` | `eval_name` *(default: "all")* | Executes reproducible benchmark tests on specific failure modes ('hallucinations', 'fake_confidence', 'context_loss', 'instruction_drift', 'manipulation', 'recursive_collapse') or all suites. |
+| `log_safety_incident` | `model_name`, `prompt`, `response`, `failure_type`, `severity`... | Records a confirmed model failure incident into the persistent database for compliance tracking and risk index calculation. |
+| `scan_multi_turn_conversation` | `turns_json` | Scans multi-turn conversation dialogues (JSON array of turn objects) for working memory degradation, context amnesia, and progressive drift. |
+| `run_benchmark_evaluations` | *None* | Executes the complete automated benchmark evaluation suite across all 6 AI failure modes. |
 
 ### 🚀 Claude Desktop & Cursor Setup
 
