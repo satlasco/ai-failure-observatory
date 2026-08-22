@@ -1,0 +1,61 @@
+[project]
+name = "ai-failure-observatory"
+version = "1.0.0"
+description = "Behavioral safety, vulnerability probing, and product-risk auditing platform for Generative AI & Large Language Models."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "ADA Creative Co.", email = "hello@adacreative.co" }
+]
+keywords = [
+    "ai-safety",
+    "llm-evaluation",
+    "hallucination-detection",
+    "red-teaming",
+    "ai-observability",
+    "vulnerability-scanner",
+    "prompt-injection",
+    "instruction-drift",
+    "compliance-audit",
+    "zero-dependency"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/adacreativeco/ai-failure-observatory"
+Repository = "https://github.com/adacreativeco/ai-failure-observatory"
+Documentation = "https://github.com/adacreativeco/ai-failure-observatory#readme"
+"Bug Tracker" = "https://github.com/adacreativeco/ai-failure-observatory/issues"
+
+[project.scripts]
+ai-failure-observatory = "server:main"
+ai-safety = "server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "server.py",
+    "index.html",
+    "analysis/**/*.py",
+    "src/**/*.py",
+    "taxonomy/**/*",
+    "experiments/**/*.py",
+    "data/**/*",
+    "*.png"
+]
