@@ -334,7 +334,20 @@ def run_server(port: int = 5089):
         httpd.server_close()
 
 
+
+
+def main() -> None:
+    """CLI entry point for running the web server."""
+    import argparse
+    parser = argparse.ArgumentParser(description="AI Failure Observatory Local Server")
+    parser.add_argument("--port", type=int, default=5089, help="Port to run the server on")
+    args, _ = parser.parse_known_args()
+    run_server(args.port)
+
+
 if __name__ == "__main__":
+    main()
+
     import argparse
 
     parser = argparse.ArgumentParser(description="AI Failure Observatory Local Server")

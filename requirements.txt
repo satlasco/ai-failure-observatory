@@ -1,11 +1,5 @@
 # AI Failure Observatory - Dependencies
-# All core functionality uses the Python standard library.
-# The packages below are optional and used for extended features.
+# Core heuristic analyzers use the Python standard library.
+# The Model Context Protocol (MCP) server enables direct AI agent connectivity.
 
-# --- Optional: for future visualization and analysis ---
-# matplotlib>=3.7
-# seaborn>=0.12
-# plotly>=5.15
-
-# --- Optional: for structured taxonomy loading ---
-# pyyaml>=6.0
+mcp[cli]>=1.2.0

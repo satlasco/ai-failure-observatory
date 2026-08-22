@@ -2,10 +2,12 @@
 
 <div align="center">
 
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Stdlib)-10b981?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![MCP](https://img.shields.io/badge/MCP-Model_Context_Protocol-6366f1?style=for-the-badge&logo=anthropic&logoColor=white)](https://modelcontextprotocol.io/)
+[![PyPI](https://img.shields.io/pypi/v/ai-failure-observatory?style=for-the-badge&color=3775A9&logo=pypi&logoColor=white)](https://pypi.org/project/ai-failure-observatory/)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Stdlib)-10b981?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-13%20Passed-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
+[![Tests](https://img.shields.io/badge/Tests-21%20Passed-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/ai-failure-observatory?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/ai-failure-observatory/stargazers)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/ai-failure-observatory/releases)
 
@@ -19,9 +21,9 @@
 
 ---
 
-A lightweight, local-first platform designed to detect, track, stress-test, and report on **6 critical LLM behavioral failure modes** before deploying models into mission-critical production workflows.
+A lightweight, local-first platform and **Model Context Protocol (MCP) Server** designed to detect, track, stress-test, and report on **6 critical LLM behavioral failure modes** before deploying models into mission-critical production workflows.
 
-Built with **Zero External Dependencies** using Python's standard library (`http.server`, `urllib.request`, `json`, `sqlite3`/file persistence).
+Built with **Zero External Core Dependencies** using Python's standard library (`http.server`, `urllib.request`, `json`, `sqlite3`/file persistence) with optional FastMCP connectivity for autonomous AI safety agents.
 
 ---
 
@@ -53,15 +55,15 @@ Built with **Zero External Dependencies** using Python's standard library (`http
 
 ```mermaid
 flowchart TD
-    subgraph ClientLayer["🖥️ Presentation & Audit UI"]
+    subgraph PresentationLayer["🖥️ Presentation & Client Interfaces"]
         WebUI["Single-Page Dashboard (index.html)"]
         Bilingual["TR ⟷ EN Internationalization Engine"]
         ReportExport["Markdown / JSON Audit Exporter"]
     end
 
-    subgraph ServerLayer["⚡ Lightweight Core (server.py)"]
-        HTTPServer["Python http.server (Dynamic Port 5089+)"]
-        RESTAPI["REST Endpoints (/api/incidents, /api/test, /api/evals)"]
+    subgraph DualAccessLayer["⚡ Dual-Mode Core Interfaces"]
+        HTTPServer["Web Dashboard (server.py on Port 5089+)"]
+        MCPServer["Model Context Protocol Server (mcp_server.py)"]
     end
 
     subgraph AnalysisEngine["🧠 Behavioral Safety Analyzers"]
@@ -80,16 +82,58 @@ flowchart TD
         Claude["Anthropic Claude (3.5 Sonnet)"]
     end
 
-    subgraph StorageLayer["💾 Persistent State"]
-        Incidents["data/incidents.json (Incident History)"]
-        Taxonomy["taxonomy/ai_failure_taxonomy.md"]
+    subgraph AIAssistants["🤖 AI Safety Agents"]
+        ClaudeDesktop["Claude Desktop"]
+        CursorIDE["Cursor IDE"]
+        Antigravity["Google Antigravity"]
     end
 
-    ClientLayer <--> ServerLayer
-    ServerLayer <--> AnalysisEngine
+    PresentationLayer <--> HTTPServer
+    MCPServer <==> AIAssistants
+    DualAccessLayer <--> AnalysisEngine
     AnalysisEngine <--> ModelLayer
-    AnalysisEngine <--> StorageLayer
+    AnalysisEngine <--> StorageLayer["💾 Persistent Incident Storage (data/incidents.json)"]
 ```
+
+---
+
+## 🔌 Model Context Protocol (MCP) Server
+
+AI Failure Observatory acts as an autonomous **AI Safety & Red-Teaming Inspector** over MCP. AI assistants in **Claude Desktop**, **Cursor**, **VS Code**, or **Antigravity** can audit generated text for safety violations, evaluate prompts for vulnerabilities, query formal risk taxonomies, and execute benchmark evaluations without opening a browser.
+
+### 🛠️ Exposed MCP Tools
+
+| MCP Tool | Parameters | Description |
+|---|---|---|
+| `audit_prompt_response` | `prompt`, `response`, `model` | Audits an LLM prompt-response pair for all 6 failure modes (hallucinations, fake confidence, manipulation, drift, context loss, reasoning collapse). |
+| `get_failure_taxonomy` | `failure_type` *(optional)* | Returns formal taxonomy definitions, severity ratings (1-10), product risk implications, and concrete mitigations. |
+| `get_risk_report` | *None* | Generates the real-time AI product risk scorecard, incident distributions, and high-priority vulnerability areas. |
+| `log_safety_incident` | `model_name`, `prompt`, `response`, `failure_type`, `severity`... | Records a confirmed model failure into the persistent incident database for compliance auditing. |
+| `scan_multi_turn_conversation` | `turns_json` | Scans multi-turn dialogues for conversational amnesia, working memory degradation, and progressive instruction drift. |
+| `run_benchmark_evaluations` | *None* | Executes the automated reproducible evaluation benchmark suite across all failure modes and returns structured results. |
+
+### 🚀 Claude Desktop & Cursor Setup
+
+Add the following to your `claude_desktop_config.json` or Cursor MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "ai-failure-observatory": {
+      "command": "uvx",
+      "args": ["ai-failure-observatory"]
+    }
+  }
+}
+```
+
+### 💡 Example AI Prompts with MCP
+
+Once connected, ask your AI assistant:
+* *"Audit this model response for invented citations or academic hallucination."*
+* *"What are the product mitigations for fake confidence and calibration errors according to the failure taxonomy?"*
+* *"Scan this 5-turn conversation transcript for context loss and negative instruction drift."*
+* *"Run the benchmark evaluation suite and give me the pass/fail score across all failure modes."*
 
 ---
 
@@ -108,54 +152,36 @@ The platform models failures across two primary axes defined in [`taxonomy/ai_fa
 
 ---
 
-## 🚀 Key Capabilities
-
-### 1. ⚡ Live Adversarial LLM Stress-Testing
-Probe any model with targeted adversarial presets or custom payloads:
-* 🟢 **Built-in Simulator (Offline):** Zero API key required, instant offline behavioral simulation.
-* ✨ **Google Gemini:** `gemini-2.0-flash`, `gemini-1.5-pro`
-* 🧠 **OpenAI:** `gpt-4o-mini`, `gpt-4o`, `o3-mini`
-* ⚡ **Anthropic Claude:** `claude-3-5-sonnet-20241022`
-
-### 2. 💾 Real-Time Incident Logging & Risk Matrix
-* Every executed probe is structured and stored in `data/incidents.json`.
-* Dynamic calculation of the **Composite Risk Index** based on category severities and occurrence frequencies.
-
-### 3. 📄 Executive Compliance Audit Reports
-* Export one-click executive audit reports in **Markdown** and **JSON** format, complete with failure timelines, category risk distribution, and concrete mitigation recommendations.
-
-### 4. 🔬 Automated Reproducible Evaluation Suite
-Run systematic benchmark evaluations across all failure modes:
-```bash
-python experiments/reproducible_evals/run_all_evals.py
-```
-
-### 5. 🌐 Full Bilingual Interface (TR ⟷ EN)
-* Instant client-side language switching across all dashboard cards, modals, presets, risk badges, and taxonomy descriptions.
-
----
-
 ## 🛠️ Quick Start
 
-### 1. Clone the Repository
+### 1. Zero-Install Execution via `uvx`
+```bash
+# Launch the Web Dashboard (Port 5089)
+uvx ai-failure-observatory --web
+
+# Launch MCP Stdio Server (for AI agents)
+uvx ai-failure-observatory
+```
+
+### 2. Standard Installation via `pip`
+```bash
+pip install ai-failure-observatory
+ai-failure-observatory --web
+```
+
+### 3. Local Development & Testing
 ```bash
 git clone https://github.com/adacreativeco/ai-failure-observatory.git
 cd ai-failure-observatory
-```
-
-### 2. Launch the Web Observatory
-```bash
 python server.py
 ```
-Open [http://localhost:5089](http://localhost:5089) in your browser. (Auto-allocates to port `5090`, `5091`... if `5089` is busy).
+Open [http://localhost:5089](http://localhost:5089) in your browser.
 
-### 3. Run Automated Unit Tests
 ```bash
+# Run automated tests
 python -m unittest discover tests
-```
 
-### 4. Run Benchmark Suite
-```bash
+# Run benchmark suite
 python experiments/reproducible_evals/run_all_evals.py
 ```
 
@@ -166,6 +192,7 @@ python experiments/reproducible_evals/run_all_evals.py
 ```
 ai-failure-observatory/
 ├── server.py                       # Zero-dependency HTTP server & REST API
+├── mcp_server.py                   # Model Context Protocol (MCP) server entry point
 ├── index.html                      # Dark-glassmorphic SPA dashboard
 ├── pyproject.toml                  # Standard Python packaging metadata
 ├── requirements.txt                # Optional dependencies
@@ -174,6 +201,7 @@ ai-failure-observatory/
 │   └── reports/                    # Generated compliance reports (JSON/Markdown)
 ├── src/
 │   ├── failure_analyzer.py         # 6 Core behavioral heuristic analyzers
+│   ├── mcp_tools.py                # MCP safety inspection & auditing tools
 │   ├── llm_client.py               # Multi-provider LLM connector (Gemini, Claude, OpenAI)
 │   ├── storage.py                  # JSON incident storage engine
 │   └── utils.py                    # Formatter & helper utilities
@@ -191,7 +219,8 @@ ai-failure-observatory/
 │   │   └── test_recursive_collapse.py
 │   └── synthetic/                  # Synthetic test data generators
 └── tests/
-    └── test_observatory.py         # Unit test suite (13 tests)
+    ├── test_observatory.py         # Core observatory unit test suite
+    └── test_mcp.py                 # MCP tools & server test suite (21 tests total)
 ```
 
 ---
