@@ -1,6 +1,6 @@
 [project]
 name = "ai-failure-observatory"
-version = "1.0.0"
+version = "1.1.0"
 description = "Behavioral safety, vulnerability probing, and product-risk auditing platform for Generative AI & Large Language Models."
 readme = "README.md"
 requires-python = ">=3.10"

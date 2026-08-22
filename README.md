@@ -7,9 +7,9 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Stdlib)-10b981?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-21%20Passed-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
+[![Tests](https://img.shields.io/badge/Tests-22%20Passed-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/ai-failure-observatory?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/ai-failure-observatory/stargazers)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/ai-failure-observatory/releases)
+[![Release](https://img.shields.io/badge/Release-v1.1.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/ai-failure-observatory/releases)
 
 <br/>
 

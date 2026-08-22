@@ -7,9 +7,9 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Bağımlılık](https://img.shields.io/badge/Bağımlılık-Sıfır%20(Stdlib)-10b981?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Lisans](https://img.shields.io/badge/Lisans-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Testler](https://img.shields.io/badge/Testler-21%20Geçti-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
+[![Testler](https://img.shields.io/badge/Testler-22%20Geçti-success?style=for-the-badge&logo=pytest&logoColor=white)](tests/test_observatory.py)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/ai-failure-observatory?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/ai-failure-observatory/stargazers)
-[![Sürüm](https://img.shields.io/badge/Sürüm-v1.0.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/ai-failure-observatory/releases)
+[![Sürüm](https://img.shields.io/badge/Sürüm-v1.1.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/ai-failure-observatory/releases)
 
 <br/>
 
